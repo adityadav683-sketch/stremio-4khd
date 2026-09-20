@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const addonBuilder = require('stremio-addon-sdk');
+const { addonBuilder } = require('stremio-addon-sdk');
 const axios = require('axios');
 const cheerio = require('cheerio');
 
@@ -31,7 +31,7 @@ builder.defineStreamHandler(async ({ type, id }) => {
     });
 
     const $ = cheerio.load(searchRes.data);
-    const firstPostLink = $('.post-item a, article first').first().attr('href');
+    const firstPostLink = $('.post-item a, article a').first().attr('href');
 
     if (!firstPostLink) return { streams: [] };
 
@@ -48,7 +48,7 @@ builder.defineStreamHandler(async ({ type, id }) => {
 
       if (link && link.startsWith('http')) {
         streams.push({
-          title: `4khdhub - ${linkText}`,
+          title: `4khdhub - ${linkText.trim()}`,
           url: link
         });
       }
