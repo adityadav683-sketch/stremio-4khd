@@ -1,6 +1,7 @@
+
 const express = require('express');
 const app = express();
-const { addonBuilder } = require('stremio-addon-sdk');
+const { addonBuilder, serveHTTP } = require('stremio-addon-sdk');
 const axios = require('axios');
 const cheerio = require('cheerio');
 
@@ -61,4 +62,4 @@ builder.defineStreamHandler(async ({ type, id }) => {
 });
 
 const port = process.env.PORT || 7000;
-addonBuilder.getInterface(builder).serveHTTP({ port });
+serveHTTP(builder.getInterface(), { port });
